@@ -14,11 +14,11 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Category::class)->constrained();  //新しい書き方！categories.id
-            $table->string('type')->default('expense')->comment('収支タイプ');            //income / expense
-            $table->unsignedInteger('amount')->comment('金額');                     //金額
-            $table->date('occurred_at')->comment('取引日');                            //取引が発生した日
-            $table->string('note')->nullable()->comment('備考');                    //メモ（nullを許容）
+            $table->foreignIdFor(Category::class)->constrained();  // 新しい書き方！categories.id
+            $table->string('type')->default('expense')->comment('収支タイプ');            // income / expense
+            $table->unsignedInteger('amount')->comment('金額');                     // 金額
+            $table->date('occurred_at')->comment('取引日');                            // 取引が発生した日
+            $table->string('note')->nullable()->comment('備考');                    // メモ（nullを許容）
             $table->timestamps();
         });
     }

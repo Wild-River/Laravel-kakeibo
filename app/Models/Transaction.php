@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
     protected function typeLabel(): Attribute
     {
         return Attribute::make(
-            get: fn() => match ($this->type) {
+            get: fn () => match ($this->type) {
                 'income' => '収入',
                 'expense' => '支出',
             },
@@ -20,7 +20,7 @@ class Transaction extends Model
     protected function amountLabel(): Attribute
     {
         return Attribute::make(
-            get: fn() => '¥' . number_format($this->amount),
+            get: fn () => '¥'.number_format($this->amount),
         );
     }
 
@@ -29,7 +29,7 @@ class Transaction extends Model
         'type',
         'amount',
         'occurred_at',
-        'note'
+        'note',
     ];
 
     protected $casts = [

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Transaction;
 use App\Models\Category;
+use App\Models\Transaction;
+use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
@@ -18,7 +18,7 @@ class TransactionController extends Controller
 
         // とってきたデータをViewに渡す
         return view('transactions.index', [
-            'transactions' => $transactions // 左がフロントで使うkey / 右が取得したデータ
+            'transactions' => $transactions, // 左がフロントで使うkey / 右が取得したデータ
         ]);
     }
 
@@ -30,7 +30,7 @@ class TransactionController extends Controller
         // $cagetories = Category::all(); // 変数に代入しなくても大丈夫
 
         return view('transactions.create', [
-            'categories' => Category::all()
+            'categories' => Category::all(),
         ]);
     }
 
@@ -44,7 +44,7 @@ class TransactionController extends Controller
             'type' => 'required|in:income,expense',
             'category_id' => 'required|exists:categories,id',
             'amount' => 'required|integer|min:1',
-            'note' => 'nullable|string|max:255'
+            'note' => 'nullable|string|max:255',
         ]);
 
         // dd($validated); //データ確認できる
@@ -69,7 +69,7 @@ class TransactionController extends Controller
     {
         return view('transactions.edit', [
             'transaction' => $transaction,
-            'categories' => Category::all()
+            'categories' => Category::all(),
         ]);
     }
 
@@ -83,7 +83,7 @@ class TransactionController extends Controller
             'type' => 'required|in:income,expense',
             'category_id' => 'required|exists:categories,id',
             'amount' => 'required|integer|min:1',
-            'note' => 'nullable|string|max:255'
+            'note' => 'nullable|string|max:255',
         ]);
 
         $transaction->update($validated);

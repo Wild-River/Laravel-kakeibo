@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); //食費・電気代など
+            $table->string('name'); // 食費・電気代など
             $table->timestamps();
         });
     }
