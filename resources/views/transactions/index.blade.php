@@ -13,10 +13,10 @@
         <tbody>
             @foreach ($transactions as $transaction)
             <tr>
-                <td>{{ $transaction->occurred_at }}</td>
+                <td>{{ $transaction->occurred_at->format('Y年n月j日') }}</td>
                 <td>{{ $transaction->category->name }}</td>
-                <td>{{ $transaction->type === 'income' ? '収入' : '支出' }}</td>
-                <td class="amount">¥{{ number_format($transaction->amount) }}</td>
+                <td>{{ $transaction->type_label }}</td>
+                <td class="amount">{{ $transaction->amount_label }}</td>
                 <td>{{ $transaction->note }}</td>
                 <td>
                     <a href="{{ route('transactions.edit', $transaction) }}">編集</a>

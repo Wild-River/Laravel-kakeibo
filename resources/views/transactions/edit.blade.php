@@ -7,7 +7,7 @@
 
         <p>
             <label>日付
-                <input type="date" name="occurred_at" value="{{ old('occurred_at', $transaction->occurred_at) }}">
+                <input type="date" name="occurred_at" value="{{ old('occurred_at', $transaction->occurred_at->format('Y-m-d')) }}">
             </label>
             @error('occurred_at') <span class="error">{{ $message }}</span> @enderror
         </p>
