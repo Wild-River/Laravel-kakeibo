@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Transaction;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class TransactionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
         // $transactions = Transaction::all(); // all()でも関連カテゴリは呼び出せる（都度SQLアクセス）
         $transactions = Transaction::with('category')->latest('occurred_at')->get();
@@ -25,7 +27,7 @@ class TransactionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
         // $cagetories = Category::all(); // 変数に代入しなくても大丈夫
 
@@ -37,7 +39,7 @@ class TransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'occurred_at' => 'required|date',
@@ -57,7 +59,7 @@ class TransactionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Transaction $transaction)
+    public function show(Transaction $transaction): void
     {
         //
     }
@@ -65,7 +67,7 @@ class TransactionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Transaction $transaction)
+    public function edit(Transaction $transaction): View
     {
         return view('transactions.edit', [
             'transaction' => $transaction,
@@ -76,7 +78,7 @@ class TransactionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Transaction $transaction)
+    public function update(Request $request, Transaction $transaction): RedirectResponse
     {
         $validated = $request->validate([
             'occurred_at' => 'required|date',
@@ -94,7 +96,7 @@ class TransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Transaction $transaction)
+    public function destroy(Transaction $transaction): RedirectResponse
     {
         $transaction->delete();
 
