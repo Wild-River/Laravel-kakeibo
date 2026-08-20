@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Shop;
 use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class TransactionController extends Controller
     public function index(): View
     {
         // $transactions = Transaction::all(); // all()でも関連カテゴリは呼び出せる（都度SQLアクセス）
-        $transactions = Transaction::with('category')->latest('occurred_at')->get();
+        $transactions = Transaction::with(['category', 'shop'])->latest('occurred_at')->get();
 
         // とってきたデータをViewに渡す
         return view('transactions.index', [
@@ -33,6 +34,7 @@ class TransactionController extends Controller
 
         return view('transactions.create', [
             'categories' => Category::all(),
+            'shops' => Shop::all(),
         ]);
     }
 
@@ -45,11 +47,12 @@ class TransactionController extends Controller
             'occurred_at' => 'required|date',
             'type' => 'required|in:income,expense',
             'category_id' => 'required|exists:categories,id',
+            'shop_id' => 'nullable|exists:shops,id',
             'amount' => 'required|integer|min:1',
             'note' => 'nullable|string|max:255',
         ]);
 
-        // dd($validated); //データ確認できる
+        $validated['shop_id'] = $validated['shop_id'] ?: null;
 
         Transaction::create($validated);
 
@@ -72,6 +75,7 @@ class TransactionController extends Controller
         return view('transactions.edit', [
             'transaction' => $transaction,
             'categories' => Category::all(),
+            'shops' => Shop::all(),
         ]);
     }
 
@@ -84,9 +88,12 @@ class TransactionController extends Controller
             'occurred_at' => 'required|date',
             'type' => 'required|in:income,expense',
             'category_id' => 'required|exists:categories,id',
+            'shop_id' => 'nullable|exists:shops,id',
             'amount' => 'required|integer|min:1',
             'note' => 'nullable|string|max:255',
         ]);
+
+        $validated['shop_id'] = $validated['shop_id'] ?: null;
 
         $transaction->update($validated);
 

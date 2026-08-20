@@ -23,6 +23,19 @@
         </p>
 
         <p>
+            <label>お店
+                <select name="shop_id">
+                    <option value="">未選択</option>
+                    @foreach ($shops as $shop)
+                    <option value="{{ $shop->id }}" @selected(old('shop_id', $transaction->shop_id) == $shop->id)>
+                        {{ $shop->name }}
+                    </option>
+                    @endforeach
+                </select>
+            </label>
+        </p>
+
+        <p>
             <label>カテゴリ
                 <select name="category_id">
                     @foreach ($categories as $category)

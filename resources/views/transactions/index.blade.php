@@ -5,6 +5,7 @@
                 <th>日付</th>
                 <th>カテゴリ</th>
                 <th>区分</th>
+                <th>お店</th>
                 <th class="amount">金額</th>
                 <th>メモ</th>
                 <th>操作</th>
@@ -16,6 +17,7 @@
                 <td>{{ $transaction->occurred_at->format('Y年n月j日') }}</td>
                 <td>{{ $transaction->category->name }}</td>
                 <td>{{ $transaction->type_label }}</td>
+                <td>{{ $transaction->shop?->name ?? '-' }}</td>
                 <td class="amount">{{ $transaction->amount_label }}</td>
                 <td>{{ $transaction->note }}</td>
                 <td>

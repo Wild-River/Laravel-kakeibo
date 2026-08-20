@@ -38,6 +38,7 @@ class Transaction extends Model
         'amount',
         'occurred_at',
         'note',
+        'shop_id',
     ];
 
     protected $casts = [
@@ -50,5 +51,13 @@ class Transaction extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * @return BelongsTo<Shop, $this>
+     */
+    public function shop(): BelongsTo
+    {
+        return $this->belongsTo(Shop::class);
     }
 }
